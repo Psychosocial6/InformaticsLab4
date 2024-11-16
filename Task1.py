@@ -6,6 +6,7 @@ def yaml_to_json(yaml_file, json_file):
     data = []
     for i in range(len(file)):
         s = file[i]
+        #print(s)
         key, value = s.split(":", 1)
         data.append([key, value, key.count(" ")])
 
@@ -18,7 +19,10 @@ def yaml_to_json(yaml_file, json_file):
             ind = json_string.rfind(",")
             json_string = json_string[:ind] + json_string[ind+1:]
             #закрытие скобки
-            json_string += "}, "
+            if spaces - sp == 2:
+                json_string += "}, "
+            else:
+                json_string += "} " * ((spaces - sp) // 2 - 1) + "}, "
         spaces = sp
         if value == "":
             json_string += '"' + key + '": ' "{ "
@@ -39,5 +43,4 @@ def yaml_to_json(yaml_file, json_file):
         f1.write(json_string)
     return
 
-yaml_to_json("tuesdaySchedule.yml", "tuesdaySchedule.json")
-yaml_to_json("thursdaySchedule.yml", "thursdaySchedule.json")
+yaml_to_json("Schedule.yml", "Schedule.json")

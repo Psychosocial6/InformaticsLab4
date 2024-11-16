@@ -16,11 +16,14 @@ def yaml_to_json(yaml_file, json_file):
     for i in data:
         key, value, sp = i[0].strip(), i[1].strip(), i[2]
         if sp < spaces:
-            #удаление лишней запятой
+            # удаление лишней запятой
             ind = json_string.rfind(",")
-            json_string = json_string[:ind] + json_string[ind+1:]
-            #закрытие скобки
-            json_string += "}, "
+            json_string = json_string[:ind] + json_string[ind + 1:]
+            # закрытие скобки
+            if spaces - sp == 2:
+                json_string += "}, "
+            else:
+                json_string += "} " * ((spaces - sp) // 2 - 1) + "}, "
         spaces = sp
         if re.fullmatch(r'', value):
             json_string += '"' + key + '": ' "{ "
@@ -41,6 +44,4 @@ def yaml_to_json(yaml_file, json_file):
         f1.write(json_string)
     return
 
-
-yaml_to_json("tuesdaySchedule.yml", "tuesdaySchedule.json")
-yaml_to_json("thursdaySchedule.yml", "thursdaySchedule.json")
+yaml_to_json("Schedule.yml", "Schedule.json")
