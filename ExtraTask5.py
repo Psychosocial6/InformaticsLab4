@@ -5,10 +5,11 @@ def yaml_to_csv(yaml_file, csv_file):
     for string in data:
         key, value = string.strip().split(":", 1)
         value.strip()
-        if key not in csv_data:
-            csv_data[key] = [value]
-        else:
-            csv_data[key].append(value)
+        if value != "":
+            if key not in csv_data:
+                csv_data[key] = [value]
+            else:
+                csv_data[key].append(value)
 
     with open(csv_file, "w", encoding="utf8") as f:
         for key in csv_data:
@@ -25,5 +26,6 @@ def yaml_to_csv(yaml_file, csv_file):
                         string += value + ";"
             string = string[:-1] + "\n"
             f.write(string)
+
 
 yaml_to_csv("Schedule.yml", "Schedule.csv")
